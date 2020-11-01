@@ -1,37 +1,34 @@
 import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QPushButton, QMainWindow, QWidget
-
-
-class ConvertWidget(QWidget):
-    def __init__(self):
-        super(ConvertWidget, self).__init__()
-        self.play_button = QPushButton("play_button")
-        self.stop_button = QPushButton("stop_button")
-        self.play_button.clicked.connect(self.startTimer)
-        self.stop_button.clicked.connect(self.stopTimer)
-        self.minutes = 24
-        self.seconds = 59
-
-    def timer(self, flag=0):
-        if flag == 0:
-            for i in range(0, 1799, -1):
-                self.minutes = i // 60
-                self.seconds = i % 60
-
-    def startTimer(self):
-        print('Hello')
-
-    def stopTimer(self):
-        print('Goodbuy')
+from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 
 class Window(QMainWindow):
     def __init__(self):
         super(Window, self).__init__()
-        super().__init__()
-        uic.loadUi('sunflower.ui', self)
         self.setWindowTitle('Sunflower')
+        uic.loadUi('sunflower.ui', self)
+
+        self.play_button.clicked.connect(self.startTimer)
+        self.stop_button.clicked.connect(self.stopTimer)
+
+    def time(self, flag=0):
+        print('Пошел')
+        if flag == 0:
+            for i in range(25, 0, -1):
+                print(i)
+                self.minutes.display(i // 60)
+                self.seconds.display(i % 60)
+                # QTimer.setInterval(1000)
+
+    def startTimer(self):
+        print('Hello')
+        self.time()
+
+    def stopTimer(self):
+        print('Goodbye')
+        self.time(flag=1)
 
 
 if __name__ == '__main__':
